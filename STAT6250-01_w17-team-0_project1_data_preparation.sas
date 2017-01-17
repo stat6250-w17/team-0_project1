@@ -31,3 +31,49 @@ composite key
 %let inputDatasetURL =
 https://github.com/stat6250-staging/team-0_project1/blob/master/frpm1516-edited.xls?raw=true
 ;
+
+* define output formats;
+proc format;
+run;
+
+
+* load raw FRPM dataset over the wire;
+filename FRPMtemp TEMP;
+proc http
+    method="get" 
+    url="&inputDatasetURL." 
+    out=FRPMtemp
+    ;
+run;
+proc import
+    file=FRPMtemp
+    out=FRPM1516_raw
+    dbms=xls
+    ;
+run;
+filename FRPMtemp clear;
+
+* check raw FRPM dataset for duplicates with respect to its composite key;
+proc sort nodupkey data=FRPM1516_raw dupout=FRPM1516_raw_dups out=_null_;
+    by County_Code District_Code School_Code;
+run;
+
+
+* build analytic dataset from FRPM dataset with the least number of columns and
+minimal cleaning/transformation needed to address research questions in
+corresponding data-analysis files;
+data FRPM1516_analytic_file;
+    retain
+        Percent_Eligible_FRPM_K12
+        District_Name
+        Charter_School
+        Enrollment_K12
+    ;
+    keep
+        Percent_Eligible_FRPM_K12
+        District_Name
+        Charter_School
+        Enrollment_K12
+    ;
+    set FRPM1516_raw;s
+run;
