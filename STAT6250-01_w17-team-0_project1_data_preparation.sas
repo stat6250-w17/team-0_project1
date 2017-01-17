@@ -29,12 +29,8 @@ composite key
 
 * setup environmental parameters;
 %let inputDatasetURL =
-https://github.com/stat6250-staging/team-0_project1/blob/master/frpm1516-edited.xls?raw=true
+https://github.com/stat6250/team-0_project1/blob/master/frpm1516-edited.xls?raw=true
 ;
-
-* define output formats;
-proc format;
-run;
 
 
 * load raw FRPM dataset over the wire;
