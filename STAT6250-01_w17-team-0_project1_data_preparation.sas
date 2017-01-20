@@ -71,5 +71,5 @@ data FRPM1516_analytic_file;
         Charter_School
         Enrollment_K12
     ;
-    set FRPM1516_raw;s
+    set FRPM1516_raw;
 run;
