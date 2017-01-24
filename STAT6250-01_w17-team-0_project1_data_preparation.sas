@@ -31,6 +31,21 @@ composite key
 %let inputDatasetURL =
 http://filebin.ca/39Z4KNmbca6c/frpm1516-edited.xls
 ;
+* create output formats;
+proc format;
+    value Enrollment_K12_bins
+        low-262="Q1 Enrollment"
+        263-510="Q2 Enrollment"
+        511-740="Q3 Enrollment"
+        741-high="Q4 Enrollment"
+    ;
+    value Percent_Eligible_FRPM_K12_bins
+        low-<.36="Q1 FRPM"
+        .36-<.67="Q2 FRPM"
+        .67-<.86="Q3 FRPM"
+        .86-high="Q4 FRPM"
+    ;
+run;
 
 
 * load raw FRPM dataset over the wire;

@@ -102,20 +102,6 @@ proc means min q1 median q3 max data=FRPM1516_analytic_file;
         Percent_Eligible_FRPM_K12
     ;
 run;
-proc format;
-    value Enrollment_K12_bins
-        low-262="Q1 Enrollment"
-        263-510="Q2 Enrollment"
-        511-740="Q3 Enrollment"
-        741-high="Q4 Enrollment"
-    ;
-    value Percent_Eligible_FRPM_K12_bins
-        low-<.36="Q1 FRPM"
-        .36-<.67="Q2 FRPM"
-        .67-<.86="Q3 FRPM"
-        .86-high="Q4 FRPM"
-    ;
-run;
 proc freq data=FRPM1516_analytic_file;
     table Enrollment_K12*Percent_Eligible_FRPM_K12
         / missing norow nocol nopercent
