@@ -37,13 +37,14 @@ relative file import path to the current directory, if using Windows;
 %setup
 
 
+
+title1
+"Research Question: What are the top twenty districts with the highest mean values of Percent Eligible FRPM for K-12?"
+;
+title2
+"Rationale: This should help identify the school districts in the most need of outreach based upon child poverty levels."
+;
 *
-Research Question: What are the top twenty districts with the highest mean
-values of "Percent (%) Eligible FRPM (K-12)"?
-
-Rationale: This should help identify the school districts in the most need of
-outreach based upon child poverty levels.
-
 Methodology: Use PROC MEANS to compute the mean of Percent_Eligible_FRPM_K12
 for District_Name, and output the results to a temportatry dataset. Use PROC
 SORT extract and sort just the means the temporary dateset, and use PROC PRINT
@@ -65,13 +66,15 @@ proc print noobs data=FRPM1516_analytic_file_temp(obs=20);
 run;
 
 
+
+title1
+"Research Question: How does the distribution of Percent Eligible FRPM for K-12 for charter schools compare to that of non-charter schools?"
+;
+
+title2
+"Rationale: This would help inform whether outreach based upon child poverty levels should be provided to charter schools."
+;
 *
-Research Question: How does the distribution of "Percent (%) Eligible FRPM
-(K-12)" for charter schools compare to that of non-charter schools?
-
-Rationale: This would help inform whether outreach based upon child poverty
-levels should be provided to charter schools.
-
 Methodolody: Compute five-number summaries by charter-school indicator variable
 ;
 proc means min q1 median q3 max data=FRPM1516_analytic_file;
@@ -80,15 +83,14 @@ proc means min q1 median q3 max data=FRPM1516_analytic_file;
 run;
 
 
+title1
+"Research Question: Can Enrollment for K-12 be used to predict Percent Eligible FRPM for K-12?"
+;
+
+title2
+"Rationale: This would help determine whether outreach based upon child poverty levels should be provided to smaller schools. E.g., if enrollment is highly correlated with FRPM rate, then only larger schools would tend to have high child poverty rates."
+;
 *
-Research Question: Can "Enrollment (K-12)" be used to predict "Percent (%)
-Eligible FRPM (K-12)"?
-
-Rationale: This would help determine whether outreach based upon child poverty
-levels should be provided to smaller schools. E.g., if enrollment is highly
-correlated with FRPM rate, then only larger schools would tend to have high
-child poverty rates.
-
 Methodology: Use proc means to study the five-number summary of each variable,
 create formats to bin values of Enrollment_K12 and Percent_Eligible_FRPM_K12
 based upon their spread, and use proc freq to cross-tabulate bins
