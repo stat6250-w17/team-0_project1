@@ -31,6 +31,7 @@ composite key
 %let inputDatasetURL =
 http://filebin.ca/39Z4KNmbca6c/frpm1516-edited.xls
 ;
+
 * create output formats;
 proc format;
     value Enrollment_K12_bins
@@ -65,8 +66,17 @@ run;
 filename FRPMtemp clear;
 
 * check raw FRPM dataset for duplicates with respect to its composite key;
-proc sort nodupkey data=FRPM1516_raw dupout=FRPM1516_raw_dups out=_null_;
-    by County_Code District_Code School_Code;
+proc sort
+        nodupkey
+        data=FRPM1516_raw
+        dupout=FRPM1516_raw_dups
+        out=_null_
+    ;
+    by
+        County_Code
+        District_Code
+        School_Code
+    ;
 run;
 
 
