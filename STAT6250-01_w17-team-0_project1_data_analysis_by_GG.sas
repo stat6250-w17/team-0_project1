@@ -51,7 +51,7 @@ footnote2
 "Moreover, we can see that virtually all of the top 20 schools appear to be elementary schools, suggesting increasing early childhood poverty."
 ;
 footnote3
-"Further analysis to look for geographic patterns is clearly warrented, given such high mean percentages of early childhood poverty"
+"Further analysis to look for geographic patterns is clearly warrented, given such high mean percentages of early childhood poverty."
 ;
 *
 Methodology: Use PROC MEANS to compute the mean of Percent_Eligible_FRPM_K12
@@ -82,6 +82,15 @@ title1
 title2
 "Rationale: This would help inform whether outreach based upon child poverty levels should be provided to charter schools."
 ;
+footnote1
+"Based on the above output, the distribution of percentage eligible for free/reduced-price meals under the National School Lunch Program appears to be roughly the same for Charter and Non-charter Schools."
+;
+footnote2
+"However, Charter schools do appear to have slighly lower childhood poverty rates, overall, given the smaller first and second quartiles."
+;
+footnote3
+"In addition, more analysis is needed for the group with value 'N/A', which has a significanly reduced child poverty distribution."
+;
 *
 Methodolody: Compute five-number summaries by charter-school indicator variable
 ;
@@ -89,6 +98,7 @@ proc means min q1 median q3 max data=FRPM1516_analytic_file;
     class Charter_School;
     var Percent_Eligible_FRPM_K12;
 run;
+
 
 
 title1
