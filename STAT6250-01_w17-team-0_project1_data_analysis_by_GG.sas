@@ -44,6 +44,15 @@ title1
 title2
 "Rationale: This should help identify the school districts in the most need of outreach based upon child poverty levels."
 ;
+footnote1
+"Based on the above output, 9 schools have 100% of their students eligible for free/reduced-price meals under the National School Lunch Program."
+;
+footnote2
+"Moreover, we can see that virtually all of the top 20 schools appear to be elementary schools, suggesting increasing early childhood poverty."
+;
+footnote3
+"Further analysis to look for geographic patterns is clearly warrented, given such high mean percentages of early childhood poverty"
+;
 *
 Methodology: Use PROC MEANS to compute the mean of Percent_Eligible_FRPM_K12
 for District_Name, and output the results to a temportatry dataset. Use PROC
@@ -70,7 +79,6 @@ run;
 title1
 "Research Question: How does the distribution of Percent Eligible FRPM for K-12 for charter schools compare to that of non-charter schools?"
 ;
-
 title2
 "Rationale: This would help inform whether outreach based upon child poverty levels should be provided to charter schools."
 ;
@@ -86,7 +94,6 @@ run;
 title1
 "Research Question: Can Enrollment for K-12 be used to predict Percent Eligible FRPM for K-12?"
 ;
-
 title2
 "Rationale: This would help determine whether outreach based upon child poverty levels should be provided to smaller schools. E.g., if enrollment is highly correlated with FRPM rate, then only larger schools would tend to have high child poverty rates."
 ;
