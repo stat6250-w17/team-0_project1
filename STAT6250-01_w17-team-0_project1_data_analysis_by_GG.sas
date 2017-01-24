@@ -44,6 +44,15 @@ title1
 title2
 "Rationale: This should help identify the school districts in the most need of outreach based upon child poverty levels."
 ;
+footnote1
+"Based on the above output, 9 schools have 100% of their students eligible for free/reduced-price meals under the National School Lunch Program."
+;
+footnote2
+"Moreover, we can see that virtually all of the top 20 schools appear to be elementary schools, suggesting increasing early childhood poverty."
+;
+footnote3
+"Further analysis to look for geographic patterns is clearly warrented, given such high mean percentages of early childhood poverty."
+;
 *
 Methodology: Use PROC MEANS to compute the mean of Percent_Eligible_FRPM_K12
 for District_Name, and output the results to a temportatry dataset. Use PROC
@@ -70,9 +79,17 @@ run;
 title1
 "Research Question: How does the distribution of Percent Eligible FRPM for K-12 for charter schools compare to that of non-charter schools?"
 ;
-
 title2
 "Rationale: This would help inform whether outreach based upon child poverty levels should be provided to charter schools."
+;
+footnote1
+"Based on the above output, the distribution of percentage eligible for free/reduced-price meals under the National School Lunch Program appears to be roughly the same for Charter and Non-charter Schools."
+;
+footnote2
+"However, Charter schools do appear to have slighly lower childhood poverty rates, overall, given the smaller first and second quartiles."
+;
+footnote3
+"In addition, more analysis is needed for the group with value 'N/A', which has a significanly reduced child poverty distribution."
 ;
 *
 Methodolody: Compute five-number summaries by charter-school indicator variable
@@ -83,27 +100,26 @@ proc means min q1 median q3 max data=FRPM1516_analytic_file;
 run;
 
 
+
 title1
 "Research Question: Can Enrollment for K-12 be used to predict Percent Eligible FRPM for K-12?"
 ;
-
 title2
 "Rationale: This would help determine whether outreach based upon child poverty levels should be provided to smaller schools. E.g., if enrollment is highly correlated with FRPM rate, then only larger schools would tend to have high child poverty rates."
 ;
+footnote1
+"Based on the above output, there's no clear inferential pattern for predicting the percentage eligible for free/reduced-price meals under the National School Lunch Program based on school enrollment since cell counts don't tend to follow trends for increasing or decreasing consistently."
+;
+footnote2
+"However, this is an incredibly course analysis since only quartiles are used, so a follow-up analysis using a more sensitive instrument (like beta regression) might find useful correlations."
+;
 *
-Methodology: Use proc means to study the five-number summary of each variable,
-create formats to bin values of Enrollment_K12 and Percent_Eligible_FRPM_K12
-based upon their spread, and use proc freq to cross-tabulate bins
+Methodology: Use proc freq to cross-tabulate bins, which were based on proc
+means output for the five-number summary of each variable.
 
 Notes: A possible follow-up to this approach could use an inferential
 statistical technique like beta regression
 ;
-proc means min q1 median q3 max data=FRPM1516_analytic_file;
-    var
-        Enrollment_K12
-        Percent_Eligible_FRPM_K12
-    ;
-run;
 proc freq data=FRPM1516_analytic_file;
     table Enrollment_K12*Percent_Eligible_FRPM_K12
         / missing norow nocol nopercent
