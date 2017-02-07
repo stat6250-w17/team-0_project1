@@ -18,6 +18,62 @@ See included file for dataset properties
 %let dataPrepFileName = STAT6250-01_w17-team-0_project1_data_preparation.sas;
 %let sasUEFilePrefix = team-0_project1;
 
+* macro to set output destination;
+%macro setOutputDestination(destination);
+    ods _all_ close;
+    %if
+        %upcase(&destination.) = HTML
+    %then
+        %do;
+            ods html;
+        %end;
+    %else %if
+        %upcase(&destination.) = LISTING
+    %then
+        %do;
+            ods listing;
+        %end;
+    %else %if
+        %upcase(&destination.) = PDF
+    %then
+        %do;
+            ods pdf;
+        %end;
+    %else %if
+        %upcase(&destination.) = RTF
+    %then
+        %do;
+            ods rtf;
+        %end;
+    %else %if
+        %upcase(&destination.) = EXCEL
+    %then
+        %do;
+            ods excel;
+        %end;
+%mend;
+
+* uncomment the line below to close all active output destinations and switch
+  the current ODS destination to HTML output only;
+/*%setOutputDestination(html)*/
+
+* uncomment the line below to close all active output destinations and switch
+  the current ODS destination to listing output only;
+/*%setOutputDestination(listing)*/
+
+* uncomment the line below to close all active output destinations and switch
+  the current ODS destination to PDF output only;
+/*%setOutputDestination(pdf)*/
+
+* uncomment the line below to close all active output destinations and switch
+  the current ODS destination to RTF output only;
+/*%setOutputDestination(rtf)*/
+
+* uncomment the line below to close all active output destinations and switch
+  the current ODS destination to Excel output only;
+/*%setOutputDestination(excel)*/
+
+
 * load external file that generates analytic dataset FRPM1516_analytic_file
 using a system path dependent on the host operating system, after setting the
 relative file import path to the current directory, if using Windows;
@@ -152,3 +208,6 @@ proc freq data=FRPM1516_analytic_file;
 run;
 title;
 footnote;
+
+* set output destination back to default HTML output;
+%setOutputDestination(html)
