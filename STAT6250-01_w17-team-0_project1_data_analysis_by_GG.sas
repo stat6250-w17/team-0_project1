@@ -18,28 +18,86 @@ See included file for dataset properties
 %let dataPrepFileName = STAT6250-01_w17-team-0_project1_data_preparation.sas;
 %let sasUEFilePrefix = team-0_project1;
 
+* macro to set output destination;
+%macro setOutputDestination(destination);
+    ods _all_ close;
+    %if
+        %upcase(&destination.) = HTML
+    %then
+        %do;
+            ods html;
+        %end;
+    %else %if
+        %upcase(&destination.) = LISTING
+    %then
+        %do;
+            ods listing;
+        %end;
+    %else %if
+        %upcase(&destination.) = PDF
+    %then
+        %do;
+            ods pdf;
+        %end;
+    %else %if
+        %upcase(&destination.) = RTF
+    %then
+        %do;
+            ods rtf;
+        %end;
+    %else %if
+        %upcase(&destination.) = EXCEL
+    %then
+        %do;
+            ods excel;
+        %end;
+%mend;
+
+* uncomment the line below to close all active output destinations and switch
+  the current ODS destination to HTML output only;
+/*%setOutputDestination(html)*/
+
+* uncomment the line below to close all active output destinations and switch
+  the current ODS destination to listing output only;
+/*%setOutputDestination(listing)*/
+
+* uncomment the line below to close all active output destinations and switch
+  the current ODS destination to PDF output only;
+/*%setOutputDestination(pdf)*/
+
+* uncomment the line below to close all active output destinations and switch
+  the current ODS destination to RTF output only;
+/*%setOutputDestination(rtf)*/
+
+* uncomment the line below to close all active output destinations and switch
+  the current ODS destination to Excel output only;
+/*%setOutputDestination(excel)*/
+
+
 * load external file that generates analytic dataset FRPM1516_analytic_file
 using a system path dependent on the host operating system, after setting the
 relative file import path to the current directory, if using Windows;
 %macro setup;
-%if
-    &SYSSCP. = WIN
-%then
-    %do;
-        X
-        "cd ""%substr(%sysget(SAS_EXECFILEPATH),1,%eval(%length(%sysget(SAS_EXECFILEPATH))-%length(%sysget(SAS_EXECFILENAME))))"""
-        ;           
-        %include ".\&dataPrepFileName.";
-    %end;
-%else
-    %do;
-        %include "~/&sasUEFilePrefix./&dataPrepFileName.";
-    %end;
+    %if
+        &SYSSCP. = WIN
+    %then
+        %do;
+            X
+            "cd ""%substr(%sysget(SAS_EXECFILEPATH),1,%eval(%length(%sysget(SAS_EXECFILEPATH))-%length(%sysget(SAS_EXECFILENAME))))"""
+            ;           
+            %include ".\&dataPrepFileName.";
+        %end;
+    %else
+        %do;
+            %include "~/&sasUEFilePrefix./&dataPrepFileName.";
+        %end;
 %mend;
 %setup
 
 
-
+*******************************************************************************;
+* Research Question Analysis Starting Point;
+*******************************************************************************;
 title1
 "Research Question: What are the top twenty districts with the highest mean values of Percent Eligible FRPM for K-12?"
 ;
@@ -59,7 +117,7 @@ footnote3
 Methodology: Use PROC MEANS to compute the mean of Percent_Eligible_FRPM_K12
 for District_Name, and output the results to a temportatry dataset. Use PROC
 SORT extract and sort just the means the temporary dateset, and use PROC PRINT
-to print just the first twenty observations from the temporary dataset;
+to print just the first twenty observations from the temporary dataset.
 ;
 proc means
         mean
@@ -83,7 +141,9 @@ title;
 footnote;
 
 
-
+*******************************************************************************;
+* Research Question Analysis Starting Point;
+*******************************************************************************;
 title1
 "Research Question: How does the distribution of Percent Eligible FRPM for K-12 for charter schools compare to that of non-charter schools?"
 ;
@@ -100,7 +160,7 @@ footnote3
 "In addition, more analysis is needed for the group with value 'N/A', which has a significanly reduced child poverty distribution."
 ;
 *
-Methodolody: Compute five-number summaries by charter-school indicator variable
+Methodology: Compute five-number summaries by charter-school indicator variable.
 ;
 proc means
         min q1 median q3 max
@@ -113,7 +173,9 @@ title;
 footnote;
 
 
-
+*******************************************************************************;
+* Research Question Analysis Starting Point;
+*******************************************************************************;
 title1
 "Research Question: Can Enrollment for K-12 be used to predict Percent Eligible FRPM for K-12?"
 ;
@@ -131,7 +193,7 @@ Methodology: Use proc freq to cross-tabulate bins, which were based on proc
 means output for the five-number summary of each variable.
 
 Notes: A possible follow-up to this approach could use an inferential
-statistical technique like beta regression
+statistical technique like beta regression.
 ;
 proc freq data=FRPM1516_analytic_file;
     table
@@ -146,3 +208,6 @@ proc freq data=FRPM1516_analytic_file;
 run;
 title;
 footnote;
+
+* set output destination back to default HTML output;
+%setOutputDestination(html)

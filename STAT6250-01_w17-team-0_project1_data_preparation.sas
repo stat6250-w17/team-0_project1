@@ -29,7 +29,7 @@ composite key
 
 * setup environmental parameters;
 %let inputDatasetURL =
-http://filebin.ca/39Z4KNmbca6c/frpm1516-edited.xls
+https://github.com/stat6250/team-0_project1/blob/master/frpm1516-edited.xls?raw=true
 ;
 
 * create output formats;
@@ -49,21 +49,31 @@ proc format;
 run;
 
 
-* load raw FRPM dataset over the wire;
-filename FRPMtemp TEMP;
-proc http
-    method="get" 
-    url="&inputDatasetURL." 
-    out=FRPMtemp
-    ;
-run;
-proc import
-    file=FRPMtemp
-    out=FRPM1516_raw
-    dbms=xls
-    ;
-run;
-filename FRPMtemp clear;
+* load raw FRPM dataset over the wire, if it doesn't already exist;
+%macro loadDataIfNotAlreadyAvailable(dsn,url,filetype);
+    %put &=url;
+    %if
+        %sysfunc(exist(&dsn.)) = 0
+    %then
+        %do;
+            filename tempfile TEMP;
+            proc http
+                method="get"
+                url="&inputDatasetURL."
+                out=tempfile
+                ;
+            run;
+            proc import
+                file=tempfile
+                out=&dsn.
+                dbms=&filetype.
+                ;
+            run;
+            filename tempfile clear;
+        %end;
+%mend;
+%loadDataIfNotAlreadyAvailable(FRPM1516_raw,&inputDatasetURL.,xls)
+
 
 * check raw FRPM dataset for duplicates with respect to its composite key;
 proc sort
