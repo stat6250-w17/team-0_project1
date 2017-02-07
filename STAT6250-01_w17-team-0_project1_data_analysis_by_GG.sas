@@ -22,24 +22,26 @@ See included file for dataset properties
 using a system path dependent on the host operating system, after setting the
 relative file import path to the current directory, if using Windows;
 %macro setup;
-%if
-    &SYSSCP. = WIN
-%then
-    %do;
-        X
-        "cd ""%substr(%sysget(SAS_EXECFILEPATH),1,%eval(%length(%sysget(SAS_EXECFILEPATH))-%length(%sysget(SAS_EXECFILENAME))))"""
-        ;           
-        %include ".\&dataPrepFileName.";
-    %end;
-%else
-    %do;
-        %include "~/&sasUEFilePrefix./&dataPrepFileName.";
-    %end;
+    %if
+        &SYSSCP. = WIN
+    %then
+        %do;
+            X
+            "cd ""%substr(%sysget(SAS_EXECFILEPATH),1,%eval(%length(%sysget(SAS_EXECFILEPATH))-%length(%sysget(SAS_EXECFILENAME))))"""
+            ;           
+            %include ".\&dataPrepFileName.";
+        %end;
+    %else
+        %do;
+            %include "~/&sasUEFilePrefix./&dataPrepFileName.";
+        %end;
 %mend;
 %setup
 
 
-
+*******************************************************************************;
+* Research Question Analysis Starting Point;
+*******************************************************************************;
 title1
 "Research Question: What are the top twenty districts with the highest mean values of Percent Eligible FRPM for K-12?"
 ;
@@ -83,7 +85,9 @@ title;
 footnote;
 
 
-
+*******************************************************************************;
+* Research Question Analysis Starting Point;
+*******************************************************************************;
 title1
 "Research Question: How does the distribution of Percent Eligible FRPM for K-12 for charter schools compare to that of non-charter schools?"
 ;
@@ -113,7 +117,9 @@ title;
 footnote;
 
 
-
+*******************************************************************************;
+* Research Question Analysis Starting Point;
+*******************************************************************************;
 title1
 "Research Question: Can Enrollment for K-12 be used to predict Percent Eligible FRPM for K-12?"
 ;
