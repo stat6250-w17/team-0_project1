@@ -29,7 +29,7 @@ composite key
 
 * setup environmental parameters;
 %let inputDatasetURL =
-http://filebin.ca/39Z4KNmbca6c/frpm1516-edited.xls
+https://github.com/stat6250/team-0_project1/blob/master/frpm1516-edited.xls?raw=true
 ;
 
 * create output formats;

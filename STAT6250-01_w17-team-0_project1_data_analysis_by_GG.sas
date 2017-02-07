@@ -59,7 +59,7 @@ footnote3
 Methodology: Use PROC MEANS to compute the mean of Percent_Eligible_FRPM_K12
 for District_Name, and output the results to a temportatry dataset. Use PROC
 SORT extract and sort just the means the temporary dateset, and use PROC PRINT
-to print just the first twenty observations from the temporary dataset;
+to print just the first twenty observations from the temporary dataset.
 ;
 proc means
         mean
@@ -100,7 +100,7 @@ footnote3
 "In addition, more analysis is needed for the group with value 'N/A', which has a significanly reduced child poverty distribution."
 ;
 *
-Methodolody: Compute five-number summaries by charter-school indicator variable
+Methodology: Compute five-number summaries by charter-school indicator variable.
 ;
 proc means
         min q1 median q3 max
@@ -131,7 +131,7 @@ Methodology: Use proc freq to cross-tabulate bins, which were based on proc
 means output for the five-number summary of each variable.
 
 Notes: A possible follow-up to this approach could use an inferential
-statistical technique like beta regression
+statistical technique like beta regression.
 ;
 proc freq data=FRPM1516_analytic_file;
     table
